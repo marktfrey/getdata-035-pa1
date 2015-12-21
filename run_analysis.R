@@ -20,7 +20,7 @@
 # the getData.R file fetches the assignment zip, preps the data dir, and
 # extracts the contents if the data is not present.  If the data are already
 # there, it doesn't do anything at all :).
-source('getData.R')
+source('get_data.R')
 
 #
 #   PART I.

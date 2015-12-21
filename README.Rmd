@@ -26,9 +26,9 @@ For the purposes of this analysis, we are using the zipfile of these research
 data sourced from the Coursera Data Science 'Getting and Cleaning Data' course
 (link: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 
-To download and extract the source data, excecute `getData.R` locally, or
+To download and extract the source data, excecute `get_data.R` locally, or
 source it from within another file.  The main `run_analysis.R` file sources the
-`getData.R` file, so you needn't execute this separately unless you want to fetch
+`get_data.R` file, so you needn't execute this separately unless you want to fetch
 and examine the data without also producing the `tidy_data.txt` file.
 
 To conduct the full analyisis locally, execute `run_analysis.R`.  This will fetch and extract
@@ -51,12 +51,12 @@ the first preparing the main dataset, (assignment steps 1--4), and
 the second preparing the new dataset of averages.
 
 Before starting, we need to make sure we actually _have_ the data.
-the `getData.R` file fetches the assignment zip, preps the data dir, and
+the `get_data.R` file fetches the assignment zip, preps the data dir, and
 extracts the contents if the data is not present.  If the data are already
 there, it doesn't do anything at all :).
 
 ```{r}
-source('getData.R')
+source('get_data.R')
 ```
 
 ### PART I: Merging and Preparing the main dataset.
