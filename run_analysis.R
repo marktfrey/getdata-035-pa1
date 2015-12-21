@@ -123,4 +123,12 @@ test_labels <- read.table('./data/UCI HAR Dataset/test/y_test.txt',
 test_data$label_id <- test_labels$label_id
 test_data <- merge(test_data, labels, by = 'label_id')
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# We've got all the data in now, let's combine the two sets together.
+
+allData <- rbind(train_data, test_data)
+
+# And that takes care of
+# > 1. Merges the training and the test sets to create one data set.
+
 # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
