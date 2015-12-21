@@ -16,7 +16,6 @@
 # the second preparing the new dataset of averages.
 #
 
-
 # Before starting, we need to make sure we actually _have_ the data.
 # the getData.R file fetches the assignment zip, preps the data dir, and
 # extracts the contents if the data is not present.  If the data are already
@@ -92,6 +91,7 @@ features$colClass <- ifelse(features$keep, 'numeric', 'NULL')
 train_data <- read.table('./data/UCI HAR Dataset/train/X_train.txt',
                          col.names = features$name,
                          colClass = features$colClass,
+                         check.names = FALSE,
                          stringsAsFactors = FALSE)
 # using our features data from above, we can check off requirements 2 and 4.
 
@@ -114,6 +114,7 @@ train_data <- merge(train_data, labels, by = 'label_id')
 test_data <- read.table('./data/UCI HAR Dataset/test/X_test.txt',
                          col.names = features$name,
                          colClass = features$colClass,
+                         check.names = FALSE,
                          stringsAsFactors = FALSE)
 test_subjects <- read.table('./data/UCI HAR Dataset/test/subject_test.txt',
                              col.names = c('subject_id'))
@@ -131,4 +132,24 @@ allData <- rbind(train_data, test_data)
 # And that takes care of
 # > 1. Merges the training and the test sets to create one data set.
 
-# 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+
+#
+#   PART II.
+#   =======
+#   Producing the new, tidy dataset.
+#
+# > 5. From the data set in step 4, creates a second,
+#      independent tidy data set with the average of each variable
+#      for each activity and each subject.
+
+# Here, we want to subset allData to just the variable columns for the
+#   call to `aggregate`, our list columns will be preserved.
+aggregateData <- aggregate(allData[ , features[features$keep, ]$name],
+                           by = list(subject_id=allData$subject_id,
+                                     label_id=allData$label_id,
+                                     label_name=allData$label_name),
+                           mean)
+
+# Then we save it out to a 'tidy' dataset!
+write.table(aggregateData, file="./tidy_data.txt", row.names = FALSE)
