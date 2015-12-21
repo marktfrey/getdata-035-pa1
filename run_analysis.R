@@ -49,6 +49,7 @@ features <- read.table('./data/UCI HAR Dataset/features.txt',
                         stringsAsFactors = FALSE)
 
 # The label text is also stored globally, so let's grab that, too.
+# For this file, we actually _want_ the names to be factors.
 labels <- read.table('./data/UCI HAR Dataset/activity_labels.txt',
                        col.names = c('label_id', 'label_name'),
                        stringsAsFactors = TRUE)
@@ -66,7 +67,8 @@ labels <- read.table('./data/UCI HAR Dataset/activity_labels.txt',
 
 # Per the features_info.txt provided with the dataset, the feature names are standardized -
 #   we can match just the ones with `-std()` or `-mean()`
-#   since our assignment specifies "", I'm taking this to mean we _don't_ want to keep the
+#   since our assignment specifies "measurements on the mean and standard deviation for each 
+#   measurement", I'm taking this to mean we _don't_ want to keep the
 #   "Additional vectors obtained by averaging the signals in a signal window sample"
 #   (gravityMean, tBodyAccMean, tBodyAccJerkMean, etc.)
 
