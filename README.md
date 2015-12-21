@@ -208,3 +208,26 @@ This is pretty simple, now that everything is in place.
 And that takes care of
 
 > 1.  Merges the training and the test sets to create one data set.
+
+### PART II: Producing the new, tidy dataset.
+
+> 1.  From the data set in step 4, creates a second, independent tidy
+>     data set with the average of each variable for each activity and
+>     each subject.
+
+Here, we want to subset `allData` to just the variable columns for the
+call to `aggregate`,as our list columns will be preserved.
+
+This will produce a new dataset with an average of each mean + std
+variable per subject and activity. The activity column names will be the
+same, but we can clean them up in a minute.
+
+    aggregateData <- aggregate(allData[ , features[features$keep, ]$name],
+                               by = list(subject_id=allData$subject_id,
+                                         label_id=allData$label_id,
+                                         label_name=allData$label_name),
+                               mean)
+
+Then we save it out to a 'tidy' dataset!
+
+    write.table(aggregateData, file="./tidy_data.txt", row.names = FALSE)
