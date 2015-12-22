@@ -73,7 +73,7 @@ labels <- read.table('./data/UCI HAR Dataset/activity_labels.txt',
 #   (gravityMean, tBodyAccMean, tBodyAccJerkMean, etc.)
 
 # First we look for the match in the names
-features$keep <- grepl("-(std|mean)\\(\\)$", features$name)
+features$keep <- grepl("-(std|mean)\\(\\)", features$name)
 
 # Then produce a vector to pass to colClasses
 features$colClass <- ifelse(features$keep, 'numeric', 'NULL')

@@ -240,6 +240,8 @@ aggregateData <- aggregate(allData[ , features[features$keep, ]$name],
 ```
 
 Then we save it out to a 'tidy' dataset!
+Since we need to commit/submit this one, it's stored in the project root
+rather than the data directory.
 
 ```{r}
 write.table(aggregateData, file="./tidy_data.txt", row.names = FALSE)
