@@ -1,6 +1,3 @@
-    library('knitr')
-    opts_chunk$set(echo=TRUE, results="asis")
-
 About this file
 ---------------
 
@@ -228,6 +225,24 @@ same, but we can clean them up in a minute.
                                          label_name=allData$label_name),
                                mean)
 
-Then we save it out to a 'tidy' dataset!
+This is almost there, but the column names don't reflect the fact that
+these vars now represent *averages* of means/standard deviations.
+
+While we're cleaning up these varnames, let's get rid of the parenthesis
+and the (I assume mislabeled, since it doesn't match the provided
+codebook features\_info.txt) `fBodyBody` in some of the vars.
+
+    tidyColumnNames <- sapply(names(aggregateData), function(name){
+      name <- gsub("BodyBody", "Body", name)
+      name <- gsub("\\(\\)", "", name)
+      name <- ifelse ((grepl("-(mean|std)(-[XYZ])?$", name)), paste(name, "-avg", sep=""), name)
+      name
+    })
+
+    colnames(aggregateData) <- tidyColumnNames
+
+Then we save it out to a 'tidy' dataset! Since we need to commit/submit
+this one, it's stored in the project root rather than the data
+directory.
 
     write.table(aggregateData, file="./tidy_data.txt", row.names = FALSE)

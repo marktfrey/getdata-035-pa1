@@ -2,10 +2,6 @@
 title: "README"
 output: md_document
 ---
-```{r}
-library('knitr')
-opts_chunk$set(echo=TRUE, results="asis")
-```
 
 ## About this file
 
@@ -237,6 +233,24 @@ aggregateData <- aggregate(allData[ , features[features$keep, ]$name],
                                      label_id=allData$label_id,
                                      label_name=allData$label_name),
                            mean)
+```
+
+This is almost there, but the column names don't reflect the fact that these
+vars now represent _averages_ of means/standard deviations.
+
+While we're cleaning up these varnames, let's get rid of the parenthesis
+and the (I assume mislabeled, since it doesn't match the provided codebook 
+features_info.txt) `fBodyBody` in some of the vars.
+
+```{r}
+tidyColumnNames <- sapply(names(aggregateData), function(name){
+  name <- gsub("BodyBody", "Body", name)
+  name <- gsub("\\(\\)", "", name)
+  name <- ifelse ((grepl("-(mean|std)(-[XYZ])?$", name)), paste(name, "-avg", sep=""), name)
+  name
+})
+
+colnames(aggregateData) <- tidyColumnNames
 ```
 
 Then we save it out to a 'tidy' dataset!
