@@ -16,3 +16,4 @@ data/
 vignettes/*.html
 vignettes/*.pdf
 
+.Rproj.user
